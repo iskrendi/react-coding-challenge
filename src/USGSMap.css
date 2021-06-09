@@ -1,0 +1,33 @@
+.usgs-map-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.map-container {
+  /* height: 600px; */
+  height: 80vh;
+  /* height: 80vmin 1 rem; */
+
+}
+
+.sidebar {
+  background-color: rgba(35, 55, 75, 0.9);
+  color: #ffffff;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  /* position: relative; */
+  top: 0;
+  left: 0;
+  margin: 12px;
+  margin-top: 12vh;
+  border-radius: 4px;
+}
+
+.input-form {
+  margin-top: 2vh;
+  display: flex;
+  justify-content: space-around;
+}
