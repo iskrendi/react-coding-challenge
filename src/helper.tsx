@@ -21,19 +21,11 @@ export const getPopupHTML = (feature: EventData): string => {
           <td>${feature.geometry.coordinates}</td>
       </tr>
     </table>`
-    // `<div>
-    //   <div>Title: ${feature.properties.title}</div>
-    //   <div>Magnitude: ${feature.properties.mag}</div>
-
-    //   <div>Coords: ${feature.geometry.coordinates}</div>
-    // </div>`
   );
 };
 
 export const getMapLegend = (properties: EventData) => {
-  // console.log("properties: ", properties);
   const time = new Date(properties.time);
-  // console.log("time: ", time.toString());
 
   return (
     <div id="state-legend" className="legend">
@@ -45,4 +37,14 @@ export const getMapLegend = (properties: EventData) => {
   );
 };
 
-
+/* in case we need to filter using turf*/ /*
+// import { booleanPointInPolygon, buffer, inside, polygon } from "@turf/turf";
+// export const filteredPoints = earthquakesFeatures.filter((feature: Feature) => {
+//   const coordsP = earthquakesFeatures[0].geometry.coordinates;
+//   const coordsR = countriesFeatures[0].geometry.coordinates;
+//   const markerPoint = Turf.point(coordsP);
+//   const countryRegion = Turf.multiPolygon(coordsR);
+//   const isInside = Turf.booleanPointInPolygon(markerPoint, countryRegion);
+//   return isInside;
+// });
+*/
