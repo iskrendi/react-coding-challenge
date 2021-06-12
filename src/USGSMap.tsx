@@ -83,7 +83,7 @@ function USGSMap() {
           source: "countries",
           type: "fill",
           paint: {
-            "fill-opacity": 0.2,
+            "fill-opacity": 0,
             'fill-outline-color': "green"
           },
           filter: ["!=", "ISO_A3", ""]
@@ -180,6 +180,7 @@ function USGSMap() {
             'countries',
             ["!=", "ISO_A3", countriesFeatures[0].properties.ISO_A3]
           );
+          map.setPaintProperty('countries', 'fill-opacity', 0.2);
         }
 
         if (earthquakesFeatures.length && countriesFeatures.length) {
@@ -208,6 +209,7 @@ function USGSMap() {
     if(showAll && newMap) {
       newMap.setFilter('earthquakes',null);
       newMap.setFilter('countries',null);
+      map.setPaintProperty('countries', 'fill-opacity', 0);
     }
   }, [map, showAll]);
 
