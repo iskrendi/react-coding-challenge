@@ -1,5 +1,5 @@
 // @ts-ignore
-import { EventData} from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import { EventData} from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 
 export const getPopupHTML = (feature: EventData): string => {
   return (

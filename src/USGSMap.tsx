@@ -1,13 +1,13 @@
-import React, { useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect, useState} from "react";
 // @ts-ignore
-import mapboxgl, { Map, MapboxEvent } from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import './USGSMap.css';
-import countriesJSON from './data/countries.json';
-import earthquakesJSON from './data/earthquakes.json';
+import mapboxgl, { Map, MapboxEvent } from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+import "./USGSMap.css";
+import countriesJSON from "./data/countries.json";
+import earthquakesJSON from "./data/earthquakes.json";
 import * as Turf from "@turf/turf";
-import { getPopupHTML, getMapLegend } from './helper';
+import { getPopupHTML, getMapLegend } from "./helper";
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbXBhdHRlcm5hZyIsImEiOiJja21udWtzOWYxc3FhMm9yd3k0azNhc3NlIn0.8AK6rDX4v_85w2hM-PxmMQ';
+mapboxgl.accessToken = "pk.eyJ1IjoiYWRhbXBhdHRlcm5hZyIsImEiOiJja21udWtzOWYxc3FhMm9yd3k0azNhc3NlIn0.8AK6rDX4v_85w2hM-PxmMQ";
 
 function USGSMap() {
   const mapContainer = useRef(null);
@@ -21,26 +21,26 @@ function USGSMap() {
   useEffect(() => {
     const map: Map= new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
       zoom: zoom
     });
 
-    map.on('load', () => {
-      map.addSource('countries', {
-        type: 'geojson',
+    map.on("load", () => {
+      map.addSource("countries", {
+        type: "geojson",
         data: countriesJSON
       });
 
-      map.addSource('earthquakes', {
-        type: 'geojson',
+      map.addSource("earthquakes", {
+        type: "geojson",
         data: earthquakesJSON
       });
 
-      map.addSource('filtered-points', {
-        type: 'geojson',
+      map.addSource("filtered-points", {
+        type: "geojson",
         data: {
-          type: 'FeatureCollection',
+          type: "FeatureCollection",
           features: [
           ]
         }
@@ -48,7 +48,7 @@ function USGSMap() {
 
       map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
-      map.on('move', () => {
+      map.on("move", () => {
         setLng(map.getCenter().lng.toFixed(4));
         setLat(map.getCenter().lat.toFixed(4));
         setZoom(map.getZoom().toFixed(2));
@@ -69,11 +69,11 @@ function USGSMap() {
         type: "circle",
         paint: {
           // make circles larger as the user zooms from z6 to z10
-          'circle-radius': {
+          "circle-radius": {
             base: 1.05,
             stops: [[6, 3], [10, 8]]
           },
-          'circle-color': "red",
+          "circle-color": "red",
         },
       });
 
@@ -84,7 +84,7 @@ function USGSMap() {
           type: "fill",
           paint: {
             "fill-opacity": 0,
-            'fill-outline-color': "green"
+            "fill-outline-color": "green"
           },
           filter: ["!=", "ISO_A3", ""]
         }
@@ -97,7 +97,7 @@ function USGSMap() {
           type: "fill",
           paint: {
             "fill-opacity": 0,
-            'fill-outline-color': "blue"
+            "fill-outline-color": "blue"
           },
           filter: ["==", "ISO_A3", ""]
         }
@@ -165,8 +165,8 @@ function USGSMap() {
         const earthquakesFeatures = map.querySourceFeatures("earthquakes");
 
         if (!countriesFeatures.length && !earthquakesFeatures.length) {
-          map.setFilter('earthquakes',null);
-          map.setFilter('countries',null);
+          map.setFilter("earthquakes",null);
+          map.setFilter("countries",null);
           setShowAll(true);
 
           return;
@@ -177,16 +177,16 @@ function USGSMap() {
           setLng(parseFloat(e.point.y));
 
           map.setFilter(
-            'countries',
+            "countries",
             ["!=", "ISO_A3", countriesFeatures[0].properties.ISO_A3]
           );
-          map.setPaintProperty('countries', 'fill-opacity', 0.2);
+          map.setPaintProperty("countries", "fill-opacity", 0.2);
         }
 
         if (earthquakesFeatures.length && countriesFeatures.length) {
           const selectedCountryCoord = countriesFeatures[0].geometry.coordinates;
           map.setFilter(
-            'earthquakes',
+            "earthquakes",
             ["within", Turf.multiPolygon(selectedCountryCoord)]
           );
 
@@ -207,9 +207,9 @@ function USGSMap() {
   useEffect(() => {
     const newMap: Map = map;
     if(showAll && newMap) {
-      newMap.setFilter('earthquakes',null);
-      newMap.setFilter('countries',null);
-      map.setPaintProperty('countries', 'fill-opacity', 0);
+      newMap.setFilter("earthquakes",null);
+      newMap.setFilter("countries",null);
+      map.setPaintProperty("countries", "fill-opacity", 0);
     }
   }, [map, showAll]);
 
